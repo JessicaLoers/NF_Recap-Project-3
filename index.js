@@ -39,7 +39,7 @@ async function fetchCharacters() {
   const data = await result.json();
   const characters = data.results;
   cardContainer.innerHTML = '';
-  const cards = characters.map(CharacterCard);
+  const cards = characters.map((character) => CharacterCard(character));
   cards.forEach((card) => cardContainer.append(card));
   // Update the pagination display to show the current page and total number of pages
   pagination.textContent = `${page} / ${maxPage}`;

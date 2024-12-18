@@ -1,8 +1,8 @@
-export function createCharacterCard(character) {
+export default function createCharacterCard(character) {
   const cardElement = document.createElement('li');
   cardElement.classList.add('card');
 
-  card.innerHTML = `
+  cardElement.innerHTML = `
   <div class='card__image-container'>
     <img
     class="card__image"
@@ -24,5 +24,5 @@ export function createCharacterCard(character) {
   </div>
 `;
 
-  return card;
+  return cardElement;
 }

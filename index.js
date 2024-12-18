@@ -23,7 +23,7 @@ async function fetchCharacters() {
   // Clear the cardContainer to remove any previous content before adding new character cards
   cardContainer.innerHTML = '';
   // Create cards for each character
-  const cards = characters.map(CharacterCard);
+  const cards = characters.map((character) => CharacterCard(character));
   // Append each card to the container
   cards.forEach((card) => cardContainer.append(card));
 }

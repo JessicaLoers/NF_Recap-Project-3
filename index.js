@@ -40,7 +40,7 @@ async function fetchCharacters() {
   console.log(data);
   const characters = data.results;
   cardContainer.innerHTML = '';
-  const cards = characters.map(CharacterCard);
+  const cards = characters.map((character) => CharacterCard(character));
   cards.forEach((card) => cardContainer.append(card));
   pagination.textContent = `${page} / ${maxPage}`;
 }

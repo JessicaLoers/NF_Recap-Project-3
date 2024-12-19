@@ -1,27 +1,30 @@
 import CharacterCard from './components/CharacterCard/CharacterCard.js';
+import NavButton from './components/NavButton/NavButton.js';
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector('[data-js="search-bar-container"]');
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
+
 const pagination = document.querySelector('[data-js="pagination"]');
 
 const maxPage = 42;
 let page = 1;
 let searchQuery = '';
 
-nextButton.addEventListener('click', () => {
-  if (page >= maxPage) return;
-
-  page++;
+// Create the "Previous" button by calling the NavButton component
+// The first argument ('prev') is the text content of the button, which determines its label
+// The second argument is a callback function (onClick) that defines what happens when the button is clicked (see comment in the NavButton.js)
+const prevButton = NavButton('prev', () => {
+  if (page <= 1) return;
+  page--;
   fetchCharacters();
 });
 
-prevButton.addEventListener('click', () => {
+// Same as above but with different arguments: 'next' is the button content, () => {} is the callback function
+const nextButton = NavButton('next', () => {
   if (page >= maxPage) return;
-  page--;
+  page++;
   fetchCharacters();
 });
 
@@ -31,6 +34,8 @@ searchBar.addEventListener('submit', (event) => {
   page = 1;
   fetchCharacters();
 });
+
+navigation.append(prevButton, nextButton);
 
 async function fetchCharacters() {
   const result = await fetch(

@@ -1,12 +1,11 @@
 import CharacterCard from './components/CharacterCard/CharacterCard.js';
 import NavButton from './components/NavButton/NavButton.js';
+import NavPagination from './components/NavPagination/NavPagination.js';
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector('[data-js="search-bar-container"]');
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-
-const pagination = document.querySelector('[data-js="pagination"]');
 
 const maxPage = 42;
 let page = 1;
@@ -28,14 +27,18 @@ const nextButton = NavButton('next', () => {
   fetchCharacters();
 });
 
+// Create the "Pagination Display" by calling the NavButton component
+const pagination = NavPagination();
+
+// Don not forget to append the DOM Element
+navigation.append(prevButton, pagination, nextButton);
+
 searchBar.addEventListener('submit', (event) => {
   event.preventDefault();
   searchQuery = event.target.elements.query.value;
   page = 1;
   fetchCharacters();
 });
-
-navigation.append(prevButton, nextButton);
 
 async function fetchCharacters() {
   const result = await fetch(
@@ -47,7 +50,18 @@ async function fetchCharacters() {
   cardContainer.innerHTML = '';
   const cards = characters.map((character) => CharacterCard(character));
   cards.forEach((card) => cardContainer.append(card));
+
   pagination.textContent = `${page} / ${maxPage}`;
+  /*  ⬆️
+  Simple Solution  to update the pagination contente (page numbers) dynamically
+   */
+
+  // pagination.update(page, maxPage);
+  /*  ⬆️
+  Advanced Solution to update the pagination dynamically using the new method
+  The "update" method is defined in NavPagination.js (see comments in NavPagination.js)
+  It dynamically sets the text content of the pagination to display the current and total pages
+   */
 }
 
 fetchCharacters();

@@ -1,10 +1,10 @@
 import CharacterCard from './components/CharacterCard/CharacterCard.js';
 import NavButton from './components/NavButton/NavButton.js';
 import NavPagination from './components/NavPagination/NavPagination.js';
+import SearchBar from './components/SearchBar/SearchBar.js';
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector('[data-js="search-bar-container"]');
-const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
 
 const maxPage = 42;
@@ -30,15 +30,16 @@ const nextButton = NavButton('next', () => {
 // Create the "Pagination Display" by calling the NavButton component
 const pagination = NavPagination();
 
-// Don not forget to append the DOM Element
-navigation.append(prevButton, pagination, nextButton);
-
-searchBar.addEventListener('submit', (event) => {
+const searchBar = SearchBar((event) => {
   event.preventDefault();
   searchQuery = event.target.elements.query.value;
   page = 1;
   fetchCharacters();
 });
+
+// Don not forget to append the DOM Elements
+navigation.append(prevButton, pagination, nextButton);
+searchBarContainer.append(searchBar);
 
 async function fetchCharacters() {
   const result = await fetch(
